@@ -1,0 +1,82 @@
+run_mode: debug              # 开发模式, debug, release, test
+addr: :8000                 # HTTP绑定端口
+name: qiandaoqitong          # API Server的名字
+url: http://127.0.0.1:8000   # pingServer函数请求的API服务器的ip:port
+max_ping_count: 10           # pingServer函数try的次数
+
+log:
+  writers: file,stdout    		 # 输出位置，有两个可选项 —— file 和 stdout:选择 file 会将日志记录到 logger_file 指定的日志文件中，选择 stdout 会将日志输出到标准输出，当然也可以两者同时选择
+  logger_level: DEBUG            # 配置日志级别(类型)
+  logger_file: log/star.log      # 日志文件
+  log_format_text: false         # 日志的输出格式，JSON或者plaintext，如果是true会输出非json格式
+  rollingPolicy: size            # rotate 依据，可选的有 daily 和 size。如果选 daily 则根据天进行转存，如果是 size 则根据大小进行转存
+  log_rotate_date: 1             # rotate 转存时间，配 合rollingPolicy: daily 使用
+  log_rotate_size: 1             # rotate 转存大小，配合 rollingPolicy: size 使用
+  log_backup_count: 7            # 当日志文件达到转存标准时，log 系统会将该日志文件进行压缩备份，这里指定了备份文件的最大个数
+
+# 数据库配置
+db:
+  name: javaweb
+  addr: 127.0.0.1:3306
+  username: root
+  password: mysql1.
+
+# redis配置
+redis:
+  database: 0
+  host: 127.0.0.1:6379
+  password:
+
+# 登录配置
+login:
+  # 是否限制单用户登录
+  single_login: true
+
+# jwt配置
+jwt:
+  # 使用88位的Base64对令牌进行编码
+  base64_secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMUTPNDA5NzYxMjdjOWMwYWRmZTBlpRQhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  # 在线用户 key
+  online_key: online-token-
+  # 过期时间 单位/毫秒，默认为5小时
+  token_validity_second: 18000000
+
+# 图片验证码配置
+code:
+  expiration: 2        # 验证码到期时间，单位分
+  captcha_type: math   # 一共五种类型验证码： 1.纯数字型 dight 2.纯字符串型：string 3.数学运算型：math 4.纯中文型：chinese 5. 音频类型：auto
+  height: 65           # 配置验证码的高度（音频不能设置高度）
+  Width: 195           # 配置验证码的宽度（音频不能设置宽度）
+  auto:
+    autoLength: 3      # 配置音频的字符(例如：length=3， 那么音频就随机输出 7 5 9)
+    language: zh       # 配置音频的语言，有：en、zh、ru、ja 四种
+  string:
+    # 设置字符串图片验证码的字符串的范围
+    source: "1234567890qwertyuiopasdfghjklzxcvbnm"
+  chinese:
+    # 设置汉字图片验证码的汉字的范围
+    source: "设想,你在,处理,消费者,的音,频输,出音,频可,能无,论什,么都,没有,任何,输出,或者,它可,能是,单声道,立体声,或是,环绕立,体声的,,不想要,的值"
+
+
+# 高德地图API：逆地理编码接口参数
+# API地址：https://lbs.amap.com/api/webservice/guide/api/georegeo
+# 填写参数：
+#  key
+#  location(经纬度坐标)
+#  sig(数字签名，私钥)
+#  extensions(取值 all 时才生效),
+#  radius(radius取值范围在0~3000，默认是1000。单位：米)
+#  roadlevel(取值 1)
+#  output (响应返回的数据格式：XML 和 JSON 格式，默认取值：JSON)
+gaode:
+  # 接口地址 必填
+  location: https://restapi.amap.com/v3/geocode/regeo
+  # key 必填
+  key: 887696a4387022f5d6c92825ce9c5dae
+  # 数字签证/私钥 必填
+  private_key: 9a41feff91301284896202782c2ade2a
+  extensions: all
+  radius: 500
+  roadlevel: 1
+  output: JSON
+
